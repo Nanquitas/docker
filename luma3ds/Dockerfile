@@ -1,5 +1,4 @@
-# FROM nanquitas/devkitarm
-FROM devkitpro/devkitarm
+FROM nanquitas/devkitarm
 
 # install python3 + firmtool
 RUN apt-get update && apt-get install -y python3-pip && \

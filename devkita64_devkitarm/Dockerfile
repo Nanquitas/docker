@@ -1,4 +1,4 @@
-FROM devkitpro/devkita64
+FROM nanquitas/devkita64
 
 MAINTAINER Dave Murphy <davem@devkitpro.org>
 
