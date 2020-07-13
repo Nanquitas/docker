@@ -1,9 +1,9 @@
-FROM nanquitas/vscode/devkitarm:latest
+FROM nanquitas/vscode-devkitarm:latest
 
 # install python3 + firmtool
 RUN apt-get update && apt-get install -y python3-pip && \
 	pip3 install git+https://github.com/TuxSH/firmtool.git
-	
+
 # build and install latest ctrulib
 RUN cd home && \
 	git clone https://github.com/devkitPro/libctru.git && \

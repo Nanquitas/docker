@@ -1,4 +1,4 @@
-FROM nanquitas/vscode/devkitarm:latest
+FROM nanquitas/vscode-devkitarm:latest
 
 # Download 3gxtool
 # This is temporary, when the new 3gx format and the 3gx api is ready, a proper repo will be created
