@@ -1,0 +1,98 @@
+name: Deploy
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # Job to build images that can be used in CI
+  bare-images:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Build toolchain base
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: nanquitas/toolchain-base
+        dockerfile: toolchain-base/Dockerfile
+        tags: latest
+
+    - name: Build devkitARM
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: nanquitas/devkitarm
+        dockerfile: devkitarm/Dockerfile
+        tags: latest
+
+    - name: Build luma3ds
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: nanquitas/luma3ds
+        dockerfile: luma3ds/Dockerfile
+        tags: latest
+
+    - name: Build 3gx-plugin
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: nanquitas/3gx-plugin
+        dockerfile: 3gx-plugin/Dockerfile
+        tags: latest
+
+  # Job to build vscode containers images
+  vscode-images:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build vsc toolchain base
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: nanquitas/vscode-toolchain-base
+        dockerfile: vscode/toolchain-base/Dockerfile
+        tags: latest
+
+    - name: Build vsc devkitARM
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: nanquitas/vscode-devkitarm
+        dockerfile: vscode/devkitarm/Dockerfile
+        tags: latest
+
+    - name: Build vsc luma3ds
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: nanquitas/vscode-luma3ds
+        dockerfile: vscode/luma3ds/Dockerfile
+        tags: latest
+
+    - name: Build vsc 3gx-plugin
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: nanquitas/vscode-3gx-plugin
+        dockerfile: vscode/3gx-plugin/Dockerfile
+        tags: latest
+    
