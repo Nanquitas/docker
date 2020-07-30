@@ -1,4 +1,4 @@
-FROM nanquitas/toolchain-base
+FROM nanquitas/toolchain-base:latest
 
 MAINTAINER Dave Murphy <davem@devkitpro.org>
 
